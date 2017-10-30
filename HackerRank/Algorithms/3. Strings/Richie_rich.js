@@ -26,27 +26,14 @@ function richieRich(s, n, k){
     var commonChars = [], diffChars = [];
     var iCommon, jCommon, iDiff, jDiff;
     s = s.split('');
-    while (i < j && k) {
-        if (s[i] != '9' && s[j] != '9') {
+    while (i < j) {
+        if (s[i] != '9' || s[j] != '9') {
             if (s[i] == s[j]) {
                 commonChars.push(i);
             }
             else {
                 diffChars.push(i);
             }
-        }
-        else if (s[i] == '9' && s[j] == '9') {
-            i++;
-            j--;
-            continue;
-        }
-        else if (s[i] == '9') {
-            --k;
-            s[j] = '9';
-        }
-        else if (s[j] == '9') {
-            --k;
-            s[i] = '9';
         }
         i++;
         j--;
@@ -72,7 +59,15 @@ function richieRich(s, n, k){
             }
         }
         else {
-            if (k > (diffChars.length - iDiff)) {
+            if (s[diffChars[iDiff]] == '9') {
+                s[n - 1 - diffChars[iDiff]] = '9';
+                k--;
+            }
+            else if (s[n - 1 - diffChars[iDiff]] == '9') {
+                s[diffChars[iDiff]] = '9';
+                k--;
+            }
+            else if (k > (diffChars.length - iDiff)) {
                 s[diffChars[iDiff]] = '9';
                 s[n - 1 - diffChars[iDiff]] = '9';
                 k -= 2;
@@ -103,7 +98,15 @@ function richieRich(s, n, k){
     }
 
     while (k && iDiff > -1 && iDiff < diffChars.length) {
-        if (k > (diffChars.length - iDiff)) {
+        if (s[diffChars[iDiff]] == '9') {
+            s[n - 1 - diffChars[iDiff]] = '9';
+            k--;
+        }
+        else if (s[n - 1 - diffChars[iDiff]] == '9') {
+            s[diffChars[iDiff]] = '9';
+            k--;
+        }
+        else if (k > (diffChars.length - iDiff)) {
             s[diffChars[iDiff]] = '9';
             s[n - 1 - diffChars[iDiff]] = '9';
             k -= 2;
